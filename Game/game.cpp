@@ -19,7 +19,7 @@ class Rubic
 {
 private:
 	glm::mat4 cube_matrix;
-	
+
 
 };
 
@@ -29,12 +29,12 @@ private:
 
 static void printMat(const glm::mat4 mat)
 {
-	std::cout<<" matrix:"<<std::endl;
+	std::cout << " matrix:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
-			std::cout<< mat[j][i]<<" ";
-		std::cout<<std::endl;
+			std::cout << mat[j][i] << " ";
+		std::cout << std::endl;
 	}
 }
 
@@ -48,17 +48,17 @@ Game::Game() : Scene()
 //	//shapes[item]->MyTranslate(glm::vec3(0, 0, 0), 0);
 //}
 
-Game::Game(float angle ,float relationWH, float near1, float far1) : Scene(angle,relationWH,near1,far1)
-{ 	
+Game::Game(float angle, float relationWH, float near1, float far1) : Scene(angle, relationWH, near1, far1)
+{
 }
 
 void Game::Init()
-{		
+{
 
-	AddShader("../res/shaders/pickingShader");	
+	AddShader("../res/shaders/pickingShader");
 	AddShader("../res/shaders/basicShader");
-	
-	AddTexture("../res/textures/plane.png",false);
+
+	AddTexture("../res/textures/plane.png", false);
 
 	//AddShape(Plane,-1,TRIANGLES);
 	//
@@ -69,14 +69,14 @@ void Game::Init()
 
 
 
-	MoveCamera(0,zTranslate,10);
+	MoveCamera(0, zTranslate, 10);
 	pickedShape = -1;
 
 	int size = 3;
 	float distance = 1;
 	int index = 0;
 
-	
+
 	for (float i = -distance; i <= distance; i += 1)
 	{
 		for (float j = -distance; j <= distance; j += 1)
@@ -146,7 +146,7 @@ void Game::Init()
 //std::cout << "\n";
 
 
-void Game::print_cube_faces() 
+void Game::print_cube_faces()
 {
 	char* border = "--------------------------------------------------\n";
 	char* face_worth_of_spaces = "               ";
@@ -159,7 +159,7 @@ void Game::print_cube_faces()
 	std::cout << "back: \n";
 	for (int i = 0; i < 9; i++)
 	{
-		
+
 		if (counter % 3 == 0)
 		{
 			std::cout << "\n";
@@ -167,11 +167,11 @@ void Game::print_cube_faces()
 		}
 
 		//check if changed from prev print
-		if(back_side[i] != back_side_prev[i])
+		if (back_side[i] != back_side_prev[i])
 		{
 			color = GREEN;
 		}
-		else 
+		else
 		{
 			color = RESET;
 		}
@@ -188,9 +188,9 @@ void Game::print_cube_faces()
 
 	std::cout << face_worth_of_spaces;
 	std::cout << "up: \n";
-	for (int i = 0 ; i < 9 ; i++)
+	for (int i = 0; i < 9; i++)
 	{
-		
+
 		if (counter % 3 == 0)
 		{
 			std::cout << "\n";
@@ -215,11 +215,11 @@ void Game::print_cube_faces()
 
 
 
-	
+
 	std::cout << "\nleft:" << "          " << "front:" << "            " << "right: \n";
-	for (int row = 0 ; row < 3; row++)
+	for (int row = 0; row < 3; row++)
 	{
-		for(int left = row*3; left < row * 3 +3; left++)
+		for (int left = row * 3; left < row * 3 + 3; left++)
 		{
 			if (left_side[left] != left_side_prev[left])
 			{
@@ -234,14 +234,14 @@ void Game::print_cube_faces()
 			{
 				std::cout << "      ";
 			}
-			else 
+			else
 			{
 				std::cout << " , ";
 			}
 
 		}
 		//std::cout << "   ";
-		for (int front = row*3; front < row*3+3; front++)
+		for (int front = row * 3; front < row * 3 + 3; front++)
 		{
 			if (front_side[front] != front_side_prev[front])
 			{
@@ -262,7 +262,7 @@ void Game::print_cube_faces()
 			}
 		}
 		//std::cout << "   ";
-		for (int right = row*3; right < row * 3 +3; right++)
+		for (int right = row * 3; right < row * 3 + 3; right++)
 		{
 			if (right_side[right] != right_side_prev[right])
 			{
@@ -285,20 +285,20 @@ void Game::print_cube_faces()
 		std::cout << "\n";
 	}
 
-	
+
 
 
 
 	//i've inverted the y so it prints as per our initial perspective
 	std::cout << face_worth_of_spaces;
 	std::cout << "down: \n";
-	for(int i = 0 ; i < 3 ; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		std::cout << "\n";
 		std::cout << face_worth_of_spaces;
-		for(int j = 0 ; j < 3 ; j++)
+		for (int j = 0; j < 3; j++)
 		{
-			if (down_side[i*3+j] != down_side_prev[i * 3 + j])
+			if (down_side[i * 3 + j] != down_side_prev[i * 3 + j])
 			{
 				color = GREEN;
 			}
@@ -307,7 +307,7 @@ void Game::print_cube_faces()
 				color = RESET;
 			}
 			std::cout << color << down_side[i * 3 + j] << RESET << " , ";
-			
+
 		}
 	}
 	//counter = 0;
@@ -332,8 +332,61 @@ void Game::print_cube_faces()
 
 }
 
+float Game::get_angle()
+{
+	return angle;
+}
 
 
+//control rotation angle
+void Game::increase_angle()
+{
+	if (angle * 2 <= 180.0f)
+	{
+		angle = angle * 2.0f;
+		std::cout << "curr angle: " << angle << "\n";
+	}
+	else
+	{
+		std::cout << "max angle reached";
+	}
+
+}
+void Game::decrease_angle()
+{
+	//we clamp it from below so we don't lose precision
+	if (angle / 2.0f > 0.05f)
+	{
+		angle = angle / 2.0f;
+		std::cout << "curr angle: " << angle << "\n";
+	}
+	else
+	{
+		std::cout << "min angle reached";
+	}
+}
+
+float Game::add_angle(float initial_angle,float added_angle)
+{
+	if (initial_angle + added_angle > 360.0f)
+	{
+		initial_angle = initial_angle + added_angle - 360.0f;
+	}
+	else if (initial_angle + added_angle < 0.0f)
+	{
+		initial_angle = initial_angle + added_angle + 360.0f;
+	}
+	else
+	{
+		initial_angle = initial_angle + added_angle;
+	}
+	if (initial_angle == 360.0f)
+	{
+		initial_angle = 0.0f;
+	}
+
+	return initial_angle;
+}
 
 
 void Game::cube_rotation(int mode)
@@ -345,8 +398,8 @@ void Game::cube_rotation(int mode)
 	int copy_up[9];
 	int copy_down[9];
 
-	int *cube_sides_backup[6] = { copy_front ,copy_back, copy_left, copy_right, copy_up, copy_down };
-	int *cube_sides_originals[6] = { front_side ,back_side, left_side, right_side, up_side, down_side};
+	int* cube_sides_backup[6] = { copy_front ,copy_back, copy_left, copy_right, copy_up, copy_down };
+	int* cube_sides_originals[6] = { front_side ,back_side, left_side, right_side, up_side, down_side };
 
 	//deep copy as backup
 	for (int i = 0; i < 6; i++)
@@ -357,93 +410,6 @@ void Game::cube_rotation(int mode)
 		}
 	}
 
-
-
-	//num will only will only work with 0,1,2. I'm expecting a 3x3 cube
-
-	//if (mode == 1) //meaning column - meaning left and right
-	//{
-	//	if (clockwise == 1) 
-	//	{
-	//		front_side[num] = copy_up[num];
-	//		front_side[num +3] = copy_up[num +3];
-	//		front_side[num +6] = copy_up[num +6];
-
-	//		down_side[num] = copy_front[num];
-	//		down_side[num + 3] = copy_front[num + 3];
-	//		down_side[num + 6] = copy_front[num + 6];
-
-	//		back_side[num] = copy_down[num];
-	//		back_side[num + 3] = copy_down[num + 3];
-	//		back_side[num + 6] = copy_down[num + 6];
-
-	//		up_side[num] = copy_back[num];
-	//		up_side[num + 3] = copy_back[num + 3];
-	//		up_side[num + 6] = copy_back[num + 6];
-	//	}
-	//	else //counter clockwise
-	//	{
-	//		front_side[num] = copy_down[num];
-	//		front_side[num + 3] = copy_down[num + 3];
-	//		front_side[num + 6] = copy_down[num + 6];
-
-	//		up_side[num] = copy_front[num];
-	//		up_side[num + 3] = copy_front[num + 3];
-	//		up_side[num + 6] = copy_front[num + 6];
-
-	//		back_side[num] = copy_up[num];
-	//		back_side[num + 3] = copy_up[num + 3];
-	//		back_side[num + 6] = copy_up[num + 6];
-
-	//		down_side[num] = copy_back[num];
-	//		down_side[num + 3] = copy_back[num + 3];
-	//		down_side[num + 6] = copy_back[num + 6];
-	//	}
-
-	//}
-
-	//else if (mode == 2) //meaning row -up and down
-	//{
-	//	if (clockwise == 1)
-	//	{
-	//		//front_side[(num * 3)] = copy_right[(num * 3)];
-	//		//front_side[(num * 3) + 1] = copy_right[(num * 3) + 1];
-	//		//front_side[(num * 3) + 2] = copy_right[(num * 3) + 2];
-
-	//		//left_side[(num * 3)] = copy_front[(num * 3)];
-	//		//left_side[(num * 3) + 1] = copy_front[(num * 3) + 1];
-	//		//left_side[(num * 3) + 2] = copy_front[(num * 3) + 2];
-
-	//		//back_side[(num * 3)] = copy_left[(num * 3)];
-	//		//back_side[(num * 3) + 1] = copy_left[(num * 3) + 1];
-	//		//back_side[(num * 3) + 2] = copy_left[(num * 3) + 2];
-
-	//		//right_side[(num * 3)] = copy_back[num * 3];
-	//		//right_side[(num * 3) + 1] = copy_back[(num * 3) + 1];
-	//		//right_side[(num * 3) + 2] = copy_back[(num * 3) + 2];
-
-	//		front_side[]
-
-	//	}
-	//	else //counter clockwise
-	//	{
-	//		front_side[(num * 3)] = copy_left[(num * 3)];
-	//		front_side[(num * 3) + 1] = copy_left[(num * 3) + 1];
-	//		front_side[(num * 3) + 2] = copy_left[(num * 3) + 2];
-
-	//		right_side[(num * 3)] = copy_front[(num * 3)];
-	//		right_side[(num * 3) + 1] = copy_front[(num * 3) + 1];
-	//		right_side[(num * 3) + 2] = copy_front[(num * 3) + 2];
-
-	//		back_side[(num * 3)] = copy_right[num * 3];
-	//		back_side[(num * 3) + 1] = copy_right[(num * 3) + 1];
-	//		back_side[(num * 3) + 2] = copy_right[(num * 3) + 2];
-
-	//		left_side[(num * 3)] = copy_back[num * 3];
-	//		left_side[(num * 3) + 1] = copy_back[(num * 3) + 1];
-	//		left_side[(num * 3) + 2] = copy_back[(num * 3) + 2];
-	//	}
-	//}
 	if (mode == 1) //meaning left 
 	{
 		front_side[0] = left_side[2];
@@ -558,7 +524,7 @@ void Game::cube_rotation(int mode)
 		right_side[5] = back_side[5];
 		right_side[8] = back_side[2];
 	}
-	
+
 
 }
 
@@ -566,12 +532,12 @@ void transpose_array(int* side_array, float clockwise) //doing hardcoded 3 by 3
 {
 	int original_copy[9];
 	//deep copying input array
-	for (int i = 0; i < 9; i++) 
+	for (int i = 0; i < 9; i++)
 	{
 		original_copy[i] = side_array[i];
 	}
 
-	if(clockwise != 1)
+	if (clockwise != 1)
 	{
 		//first row to first column
 		side_array[0] = original_copy[2];
@@ -602,100 +568,266 @@ void transpose_array(int* side_array, float clockwise) //doing hardcoded 3 by 3
 		side_array[0] = original_copy[6];
 		side_array[3] = original_copy[7];
 		side_array[6] = original_copy[8];
-	
+
 	}
 }
 
 
 void Game::cube_rotate_left_side()
 {
-
-	//do the rotation
-	for (int item : left_side)
+	if (!up_face_lock && !down_face_lock && !front_face_lock && !back_face_lock) //we don't care about right status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(clockwise * transposed_rot * glm::vec4(1, 0, 0, 1)), 0);
+		//do the rotation
+		for (int item : left_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3(clockwise * transposed_rot * glm::vec4(1, 0, 0, 1)), 0);
+		}
+
+		//left_face_angle = add_angle(left_face_angle, get_angle() * clockwise);
+		left_face_angle = left_face_angle + get_angle()* clockwise;
+		//transpose_array(left_side, clockwise);
+		//cube_rotation(1);
+
+		if (((int)left_face_angle % 90) == 0)
+		{
+			//for (int i = 0; i < get_angle() / 90 && left_face_angle_proper != left_face_angle; i++)
+			for (int i = 0; i < abs(left_face_angle - left_face_angle_proper) / 90 && left_face_angle_proper != left_face_angle; i++)
+			{
+				transpose_array(left_side, clockwise);
+				cube_rotation(1);
+			}
+			left_face_angle_proper = left_face_angle;
+
+			left_face_lock = 0;
+		}
+		else
+		{
+			left_face_lock = 1;
+		}
 	}
-
-	transpose_array(left_side, clockwise);
-	cube_rotation(1);
-	
-
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE LEFT SIDE\n";
+	}
 
 }
 
 void Game::cube_rotate_right_side()
 {
-	for (int item : right_side)
+	if (!up_face_lock && !down_face_lock && !front_face_lock && !back_face_lock) //we don't care about left status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(( - 1 * clockwise )* transposed_rot * glm::vec4(1, 0, 0, 1)), 0);
+		for (int item : right_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3((-1 * clockwise) * transposed_rot * glm::vec4(1, 0, 0, 1)), 0);
+		}
+
+		//right_face_angle = add_angle(right_face_angle, get_angle() * clockwise);
+		right_face_angle = right_face_angle + get_angle() * clockwise;
+		std::cout << right_face_angle << "\n";
+
+		std::cout << "get_angle: " << get_angle() << '\n';
+
+		if (((int)right_face_angle % 90) == 0)
+		{
+			//for (int i = 0; i < get_angle() / 90 && right_face_angle_proper != right_face_angle; i++)
+			for (int i = 0; i < abs(right_face_angle - right_face_angle_proper) / 90 && right_face_angle_proper != right_face_angle; i++)
+			{
+				transpose_array(right_side, (clockwise));
+				cube_rotation(2);
+
+
+			}
+			//if(right_face_angle )
+			right_face_angle_proper = right_face_angle;
+
+			right_face_lock = 0;
+		}
+		else
+		{
+			right_face_lock = 1;
+		}
+	}
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE RIGHT SIDE\n";
 	}
 
-	transpose_array(right_side, (clockwise));
-	cube_rotation(2);
-	
+
 }
 
 
 void Game::cube_rotate_up_side()
 {
-
-	//do the rotation
-	for (int item : up_side)
+	if (!left_face_lock && !right_face_lock && !front_face_lock && !back_face_lock) //we don't care about down status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(( - 1 * clockwise) * transposed_rot * glm::vec4(0, 1, 0, 1)), 0);
+		//do the rotation
+		for (int item : up_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3((-1 * clockwise) * transposed_rot * glm::vec4(0, 1, 0, 1)), 0);
+		}
+
+		//up_face_angle = add_angle(up_face_angle, get_angle() * clockwise);
+		up_face_angle = up_face_angle + get_angle() * clockwise;
+
+
+		std::cout << up_face_angle << "\n";
+
+		if (((int)up_face_angle % 90) == 0)
+		{
+
+			//for (int i = 0; i < get_angle() / 90 && up_face_angle_proper != up_face_angle; i++)
+			for (int i = 0; i < abs(up_face_angle - up_face_angle_proper) / 90 && up_face_angle_proper != up_face_angle; i++)
+			{
+				std::cout << "ding" << "\n";
+				transpose_array(up_side, (clockwise));
+				cube_rotation(3);
+
+			}
+
+			up_face_angle_proper = up_face_angle;
+
+			up_face_lock = 0;
+		}
+		else
+		{
+			up_face_lock = 1;
+			std::cout << "UP LOCKED\n";
+		}
+	}
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE UP SIDE\n";
 	}
 
-	transpose_array(up_side, (clockwise));
-	cube_rotation(3);
-	
+
+
 }
 
 void Game::cube_rotate_down_side()
 {
-
-	//do the rotation
-	for (int item : down_side)
+	if (!left_face_lock && !right_face_lock && !front_face_lock && !back_face_lock) //we don't care about up status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(clockwise * transposed_rot * glm::vec4(0, 1, 0, 1)), 0);
+		//do the rotation
+		for (int item : down_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3(clockwise * transposed_rot * glm::vec4(0, 1, 0, 1)), 0);
+		}
+
+		//down_face_angle = add_angle(down_face_angle, get_angle() * clockwise);
+		down_face_angle = down_face_angle + get_angle() * clockwise;
+
+		if (((int)down_face_angle % 90) == 0)
+		{
+			//for (int i = 0; i < get_angle() / 90 && down_face_angle_proper != down_face_angle; i++)
+			for (int i = 0; i < abs(down_face_angle - down_face_angle_proper) / 90 && down_face_angle_proper != down_face_angle; i++)
+			{
+				transpose_array(down_side, clockwise);
+				cube_rotation(4);
+
+			}
+			down_face_angle_proper = down_face_angle;
+
+			down_face_lock = 0;
+		}
+		else
+		{
+			down_face_lock = 1;
+		}
+	}
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE DOWN SIDE\n";
 	}
 
-	transpose_array(down_side, clockwise);
-	cube_rotation(4);
-	
+
+
 }
 
 void Game::cube_rotate_front_side()
 {
-
-	//do the rotation
-	for (int item : front_side)
+	if (!left_face_lock && !right_face_lock && !up_face_lock && !down_face_lock) //we don't care about back status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(( - 1 * clockwise) * transposed_rot * glm::vec4(0, 0, 1, 1)), 0);
+		//do the rotation
+		for (int item : front_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3((-1 * clockwise) * transposed_rot * glm::vec4(0, 0, 1, 1)), 0);
+		}
+
+		//front_face_angle = add_angle(front_face_angle, get_angle() * clockwise);
+		front_face_angle = front_face_angle + get_angle() * clockwise;
+
+
+		if (((int)front_face_angle % 90) == 0)
+		{
+			//for (int i = 0; i < get_angle() / 90 && front_face_angle_proper != front_face_angle; i++)
+			for (int i = 0; i < abs(front_face_angle - front_face_angle_proper) / 90 && front_face_angle_proper != front_face_angle; i++)
+			{
+				transpose_array(front_side, clockwise);
+				cube_rotation(5);
+
+			}
+			front_face_angle_proper = front_face_angle;
+
+			front_face_lock = 0;
+		}
+		else
+		{
+			front_face_lock = 1;
+		}
+
+	}
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE FRONT SIDE\n";
 	}
 
-	transpose_array(front_side, clockwise);
-	cube_rotation(5);
-	
 }
 
 void Game::cube_rotate_back_side()
 {
-
-	//do the rotation
-	for (int item : back_side)
+	if (!left_face_lock && !right_face_lock && !up_face_lock && !down_face_lock) //we don't care about front status, and obviously ourselves
 	{
-		glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
-		shapes[item]->MyRotate(90.0f, glm::vec3(clockwise * transposed_rot * glm::vec4(0, 0, 1, 1)), 0);
+		//do the rotation
+		for (int item : back_side)
+		{
+			glm::mat4 transposed_rot = glm::transpose(shapes[item]->getRot());
+			shapes[item]->MyRotate(get_angle(), glm::vec3(clockwise * transposed_rot * glm::vec4(0, 0, 1, 1)), 0);
+		}
+
+		//back_face_angle = add_angle(back_face_angle, get_angle() * clockwise);
+		back_face_angle = back_face_angle + get_angle() * clockwise;
+
+
+		if (((int)back_face_angle % 90) == 0)
+		{
+			//for (int i = 0; i < get_angle() / 90 && back_face_angle_proper != back_face_angle; i++)
+			for (int i = 0; i < abs(back_face_angle - back_face_angle_proper) / 90 && back_face_angle_proper != back_face_angle; i++)
+			{
+				transpose_array(back_side, clockwise);
+				cube_rotation(6);
+
+			}
+			back_face_angle_proper = back_face_angle;
+
+			back_face_lock = 0;
+		}
+		else
+		{
+			back_face_lock = 1;
+		}
+	}
+	else 
+	{
+		std::cout << "UNABLE TO TURN THE BACK SIDE\n";
 	}
 
-	transpose_array(back_side, clockwise);
-	cube_rotation(6);
-	
+
+
 }
 
 //cube sides
@@ -706,20 +838,20 @@ void Game::cube_rotate_back_side()
 //int front_side[] = {0,3,6,9,12,15,18,21,24}; // relevant axis (0,0,1)
 //int back_side[] = {2,5,8,11,14,17,20,23,26}; // relevant axis (0,0,1)
 
-void Game::Update(const glm::mat4 &MVP,const glm::mat4 &Model,const int  shaderIndx)
+void Game::Update(const glm::mat4& MVP, const glm::mat4& Model, const int  shaderIndx)
 {
-	Shader *s = shaders[shaderIndx];
-	int r = ((pickedShape+1) & 0x000000FF) >>  0;
-	int g = ((pickedShape+1) & 0x0000FF00) >>  8;
-	int b = ((pickedShape+1) & 0x00FF0000) >> 16;
+	Shader* s = shaders[shaderIndx];
+	int r = ((pickedShape + 1) & 0x000000FF) >> 0;
+	int g = ((pickedShape + 1) & 0x0000FF00) >> 8;
+	int b = ((pickedShape + 1) & 0x00FF0000) >> 16;
 	s->Bind();
 	s->SetUniformMat4f("MVP", MVP);
-	s->SetUniformMat4f("Normal",Model);
-	s->SetUniform4f("lightDirection", 0.0f , 0.0f, -1.0f, 0.0f);
-	if(shaderIndx == 0)
-		s->SetUniform4f("lightColor",r/255.0f, g/255.0f, b/255.0f,1.0f);
-	else 
-		s->SetUniform4f("lightColor",0.7f,0.8f,0.1f,1.0f);
+	s->SetUniformMat4f("Normal", Model);
+	s->SetUniform4f("lightDirection", 0.0f, 0.0f, -1.0f, 0.0f);
+	if (shaderIndx == 0)
+		s->SetUniform4f("lightColor", r / 255.0f, g / 255.0f, b / 255.0f, 1.0f);
+	else
+		s->SetUniform4f("lightColor", 0.7f, 0.8f, 0.1f, 1.0f);
 	s->Unbind();
 }
 
@@ -733,7 +865,7 @@ void Game::WhenTranslate()
 
 void Game::Motion()
 {
-	if(isActive)
+	if (isActive)
 	{
 	}
 }
