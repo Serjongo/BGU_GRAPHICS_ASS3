@@ -194,8 +194,12 @@
 			if(button == 1 )
 			{				
 
-				MyTranslate(glm::vec3(-xrel/20.0f,0,0),0);
-				MyTranslate(glm::vec3(0,yrel/20.0f,0),0);
+				//MyTranslate(glm::vec3(-xrel/20.0f,0,0),0);
+				//MyTranslate(glm::vec3(0,yrel/20.0f,0),0);
+				//WhenTranslate();
+
+				MoveCamera(0, 1, yrel / 15.0f);
+				MoveCamera(0, 0, -xrel / 15.0f);
 				WhenTranslate();
 			}
 			else

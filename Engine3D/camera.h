@@ -24,6 +24,13 @@ public:
 		return relationWH;}
 	
 	void SetProjection(float fov, float relationWH);
+
+	// Method to move the camera along the Z-axis
+	void AdjustZ(float delta) {
+		// Assuming MovableGLM has a method like this or you need to implement it
+		// This is a placeholder function. Replace it with actual functionality.
+		MyTranslate(glm::vec3(0, 0, delta), 1);
+	}
 protected:
 private:
 	glm::mat4 projection;

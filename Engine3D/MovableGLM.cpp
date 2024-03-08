@@ -32,8 +32,10 @@ glm::mat4 MovableGLM::MakeTrans() const
 
 void MovableGLM::MyTranslate(glm::vec3 delta,int mode)
 {
-	//glm::mat4 transposed_trans = glm::transpose(trans);
-	trans = glm::translate(trans,delta);
+
+		//glm::mat4 transposed_trans = glm::transpose(trans);
+		trans = glm::translate(trans, delta);
+
 }
 
 void MovableGLM::MyRotate(float angle, const glm::vec3& vec, int mode)
