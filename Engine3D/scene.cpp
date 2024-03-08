@@ -201,8 +201,8 @@
 			else
 			{
 				
-				MyRotate(-xrel/2.0f,glm::vec3(0,1,0),0);
-				MyRotate(-yrel/2.0f,glm::vec3(1,0,0),0);
+				MyRotate(-xrel/2.0f,glm::vec3(0,1,0),3);
+				MyRotate(-yrel/2.0f,glm::vec3(1,0,0),3);
 				WhenRotate();
 			}
 		}
@@ -246,6 +246,15 @@
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
+	void Scene::MoveCameraZ(int cameraIndex, float deltaZ) {
+		if (cameraIndex >= 0 && cameraIndex < cameras.size()) {
+			cameras[cameraIndex]->AdjustZ(deltaZ);
+		}
+	}
+
+	int Scene::GetCurrentCameraIndex() {
+		return 0;
+	}
 	Scene::~Scene(void)
 {
 	for (Shape* shp : shapes)
