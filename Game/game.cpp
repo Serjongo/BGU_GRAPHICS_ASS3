@@ -312,6 +312,62 @@ void Game::print_cube_faces()
 
 }
 
+void Game::set_angle(float input_angle) 
+{
+	angle = input_angle;
+}
+
+void Game::random_cuber_mixer() 
+{
+
+	if(!back_face_lock && !front_face_lock && !up_face_lock && !down_face_lock && !left_face_lock && !right_face_lock)
+	{
+		//backup original angle and return to it once done, since we only want to rotate by 90 each twist
+		float original_angle = get_angle();
+		set_angle(90.0f);
+
+		int rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_back_side();
+		}
+		rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_front_side();
+		}
+		rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_up_side();
+		}
+		rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_down_side();
+		}
+		rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_left_side();
+		}
+		rotations = rand() % 4;
+		for (int i = 0; i < rotations; i++)
+		{
+			cube_rotate_right_side();
+		}
+		set_angle(original_angle);
+	
+	}
+	else 
+	{
+		std::cout << "All cube faces must be properly positioned before mixing them\n";
+	}
+
+	
+}
+
+
 float Game::get_angle()
 {
 	return angle;
@@ -567,6 +623,8 @@ void Game::cube_rotate_left_side()
 
 		//left_face_angle = add_angle(left_face_angle, get_angle() * clockwise);
 		left_face_angle = left_face_angle + get_angle() * clockwise;
+
+		std::cout << "Rotating left face by : " << get_angle() << " degrees" << '\n';
 		//transpose_array(left_side, clockwise);
 		//cube_rotation(1);
 
@@ -606,9 +664,9 @@ void Game::cube_rotate_right_side()
 
 		//right_face_angle = add_angle(right_face_angle, get_angle() * clockwise);
 		right_face_angle = right_face_angle + get_angle() * clockwise;
-		std::cout << right_face_angle << "\n";
+		//std::cout << right_face_angle << "\n";
 
-		std::cout << "get_angle: " << get_angle() << '\n';
+		std::cout << "Rotating right face by : " << get_angle() << " degrees" << '\n';
 
 		if (((int)right_face_angle % 90) == 0)
 		{
@@ -653,8 +711,8 @@ void Game::cube_rotate_up_side()
 		//up_face_angle = add_angle(up_face_angle, get_angle() * clockwise);
 		up_face_angle = up_face_angle + get_angle() * clockwise;
 
-
-		std::cout << up_face_angle << "\n";
+		std::cout << "Rotating up face by : " << get_angle() << " degrees" << '\n';
+		//std::cout << up_face_angle << "\n";
 
 		if (((int)up_face_angle % 90) == 0)
 		{
@@ -662,7 +720,7 @@ void Game::cube_rotate_up_side()
 			//for (int i = 0; i < get_angle() / 90 && up_face_angle_proper != up_face_angle; i++)
 			for (int i = 0; i < abs(up_face_angle - up_face_angle_proper) / 90 && up_face_angle_proper != up_face_angle; i++)
 			{
-				std::cout << "ding" << "\n";
+				//std::cout << "ding" << "\n";
 				transpose_array(up_side, (clockwise));
 				cube_rotation(3);
 
@@ -700,6 +758,8 @@ void Game::cube_rotate_down_side()
 
 		//down_face_angle = add_angle(down_face_angle, get_angle() * clockwise);
 		down_face_angle = down_face_angle + get_angle() * clockwise;
+
+		std::cout << "Rotating down face by : " << get_angle() << " degrees" << '\n';
 
 		if (((int)down_face_angle % 90) == 0)
 		{
@@ -742,6 +802,7 @@ void Game::cube_rotate_front_side()
 		//front_face_angle = add_angle(front_face_angle, get_angle() * clockwise);
 		front_face_angle = front_face_angle + get_angle() * clockwise;
 
+		std::cout << "Rotating front face by : " << get_angle() << " degrees" << '\n';
 
 		if (((int)front_face_angle % 90) == 0)
 		{
@@ -782,7 +843,7 @@ void Game::cube_rotate_back_side()
 
 		//back_face_angle = add_angle(back_face_angle, get_angle() * clockwise);
 		back_face_angle = back_face_angle + get_angle() * clockwise;
-
+		std::cout << "Rotating back face by : " << get_angle() << " degrees" << '\n';
 
 		if (((int)back_face_angle % 90) == 0)
 		{

@@ -75,6 +75,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		case GLFW_KEY_LEFT_CONTROL:
 			scn->print_cube_faces();
 			break;
+		case GLFW_KEY_LEFT_SHIFT:
+			scn->random_cuber_mixer();
+			break;
 		case GLFW_KEY_F:
 			scn->cube_rotate_front_side();
 			break;

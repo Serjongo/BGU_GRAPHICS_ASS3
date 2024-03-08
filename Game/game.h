@@ -22,11 +22,15 @@ public:
 	void cube_rotate_front_side();
 	void cube_rotate_back_side();
 
+	//random mixer
+	void random_cuber_mixer();
+
 
 
 	//cube_face_angles
 	//float left_face_angle();
 
+	void set_angle(float input_angle);
 	float get_angle();
 	void increase_angle();
 	void decrease_angle();
